@@ -1,0 +1,23 @@
+{
+  "keys": {
+    "ERP-PRO-TEST-0001": {
+      "plan": "pro",
+      "expiresAt": "2027-12-31",
+      "dailyLimit": -1,
+      "features": ["mapping_save", "history_30d"]
+    },
+    "ERP-ENT-TEST-0001": {
+      "plan": "enterprise",
+      "expiresAt": "2027-12-31",
+      "dailyLimit": -1,
+      "features": ["mapping_save", "history_unlimited", "multi_seat", "priority_support"]
+    },
+    "ERP-PRO-2026-0001": {
+      "plan": "pro",
+      "expiresAt": "2027-06-30",
+      "dailyLimit": -1,
+      "features": ["mapping_save", "history_30d"]
+    }
+  },
+  "revokedKeys": []
+}
