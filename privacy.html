@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=800">
+    <title>隐私政策 - ERP订单自动比对</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #00a69b;
+        }
+        h2 {
+            font-size: 18px;
+            margin: 24px 0 12px;
+            color: #333;
+        }
+        p {
+            margin-bottom: 12px;
+            color: #555;
+        }
+        ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+        li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .footer {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid #e8e8e8;
+            font-size: 13px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>隐私政策</h1>
+        <p><strong>生效日期：</strong>2026年6月26日</p>
+
+        <p>本隐私政策说明 ERP订单自动比对 扩展（以下简称"本扩展"）如何收集、使用和保护您的信息。</p>
+
+        <h2>1. 数据处理方式</h2>
+        <p>本扩展的核心功能（订单比对、Excel 导入、商品导出、图片下载）<strong>全部在您的浏览器本地完成</strong>。您的订单数据、Excel 内容、商品信息等敏感业务数据不会上传到任何服务器。</p>
+
+        <h2>2. 我们收集的信息</h2>
+        <ul>
+            <li><strong>使用统计：</strong>为控制免费版每日额度和展示使用统计，本扩展会在本地记录每日/每月/累计处理订单数量。</li>
+            <li><strong>设备标识：</strong>为授权管理需要，本扩展会生成一个本地设备 ID，仅用于统计和防止授权滥用。</li>
+            <li><strong>授权信息：</strong>您输入的授权码会经过验证后本地缓存，用于判断当前可用的功能。</li>
+        </ul>
+
+        <h2>3. 与远程服务器的通信</h2>
+        <p>本扩展仅在以下场景与远程服务器通信：</p>
+        <ul>
+            <li>验证授权码有效性</li>
+            <li>检查是否有新版本</li>
+            <li>获取远程授权配置（用于撤销非法授权码）</li>
+        </ul>
+        <p>上述通信不会包含您的订单内容、客户信息或业务数据。</p>
+
+        <h2>4. 权限使用说明</h2>
+        <ul>
+            <li><strong>storage：</strong>用于本地保存设置、授权信息、使用统计和商品缓存。</li>
+            <li><strong>activeTab：</strong>用于与当前 ERP 页面通信，执行自动化操作。</li>
+            <li><strong>downloads：</strong>用于下载商品库 Excel 和商品图片压缩包。</li>
+        </ul>
+
+        <h2>5. 数据安全</h2>
+        <p>本扩展使用 Chrome 浏览器提供的安全存储机制（chrome.storage.local）保存本地数据。我们不会出售、出租或以其他方式向第三方披露您的个人信息。</p>
+
+        <h2>6. 联系我们</h2>
+        <p>如果您对本隐私政策有任何疑问，请联系：liuhong1688@vip.qq.com</p>
+
+        <div class="footer">
+            <p>ERP订单自动比对 v4.1.0 - 个人版</p>
+        </div>
+    </div>
+</body>
+</html>
