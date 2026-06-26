@@ -19,5 +19,5 @@
       "features": ["mapping_save", "history_30d"]
     }
   },
-  "revokedKeys": ["ERP-PRO-2026-0001"]
+  "revokedKeys": []
 }
