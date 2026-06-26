@@ -2,108 +2,511 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=600">
-    <title>感谢使用 - ERP订单自动比对</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卸载反馈 - ERP订单自动比对插件</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: "Microsoft YaHei", sans-serif;
-            font-size: 14px;
-            color: #333;
-            background: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
-        .card {
+        .container {
             background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-            text-align: center;
-            max-width: 500px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            max-width: 560px;
             width: 100%;
+            overflow: hidden;
         }
-        .icon {
-            font-size: 48px;
-            margin-bottom: 16px;
+        .header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #fff;
+            padding: 32px 32px 28px;
+            text-align: center;
         }
-        h1 {
+        .header h1 {
             font-size: 22px;
-            margin-bottom: 12px;
-            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
-        p {
-            color: #666;
-            margin-bottom: 20px;
+        .header p {
+            font-size: 14px;
+            opacity: 0.85;
             line-height: 1.6;
         }
-        .feedback {
-            margin: 24px 0;
+        .header .emoji {
+            font-size: 48px;
+            margin-bottom: 12px;
+            display: block;
         }
-        textarea {
-            width: 100%;
-            height: 100px;
-            padding: 12px;
-            border: 1px solid #d9d9d9;
-            border-radius: 6px;
-            font-family: inherit;
+        .body {
+            padding: 28px 32px 32px;
+        }
+
+        /* 常见问题折叠 */
+        .faq-section {
+            margin-bottom: 24px;
+        }
+        .faq-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .faq-title::before {
+            content: "💡";
+        }
+        .faq-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .faq-item:hover {
+            border-color: #a78bfa;
+        }
+        .faq-q {
+            padding: 10px 14px;
             font-size: 13px;
+            font-weight: 500;
+            color: #4f46e5;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #faf5ff;
+            user-select: none;
+        }
+        .faq-q:hover {
+            background: #f3e8ff;
+        }
+        .faq-q .arrow {
+            transition: transform 0.2s;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+        .faq-item.open .faq-q .arrow {
+            transform: rotate(180deg);
+        }
+        .faq-a {
+            display: none;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.6;
+            border-top: 1px solid #f3f4f6;
+        }
+        .faq-item.open .faq-a {
+            display: block;
+        }
+        .faq-a a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+        .faq-a a:hover {
+            text-decoration: underline;
+        }
+
+        /* 分割线 */
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 20px 0;
+        }
+
+        /* 反馈表单 */
+        .form-section {
+            margin-top: 4px;
+        }
+        .form-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .form-title::before {
+            content: "📝";
+        }
+        .reason-group {
+            margin-bottom: 16px;
+        }
+        .reason-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 10px;
+        }
+        .reason-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .reason-opt {
+            position: relative;
+        }
+        .reason-opt input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .reason-opt label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #4b5563;
+            cursor: pointer;
+            transition: all 0.15s;
+            margin-bottom: 0;
+        }
+        .reason-opt label:hover {
+            border-color: #a78bfa;
+            background: #faf5ff;
+        }
+        .reason-opt input:checked + label {
+            border-color: #7c3aed;
+            background: #ede9fe;
+            color: #5b21b6;
+            font-weight: 500;
+        }
+        .reason-opt label .icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .comment-group {
+            margin-bottom: 20px;
+        }
+        .comment-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        .comment-group textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #374151;
             resize: vertical;
+            font-family: inherit;
+            line-height: 1.5;
+            transition: border-color 0.15s;
+        }
+        .comment-group textarea:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+        .comment-group textarea::placeholder {
+            color: #9ca3af;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
         }
         .btn {
-            display: inline-block;
-            padding: 10px 24px;
-            background: #00a69b;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 8px;
             font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
         }
-        .btn:hover {
-            background: #008f82;
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #fff;
         }
-        .footer {
-            margin-top: 24px;
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #4b5563;
+            border: 1px solid #e5e7eb;
+        }
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        /* 成功状态 */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 40px 32px;
+        }
+        .success-state .check-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .success-state .check-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #fff;
+            stroke-width: 3;
+            fill: none;
+        }
+        .success-state h2 {
+            font-size: 20px;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .success-state p {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        /* 错误提示 */
+        .error-msg {
+            color: #dc2626;
             font-size: 12px;
-            color: #999;
+            margin-top: 4px;
+            display: none;
+        }
+
+        /* 响应式 */
+        @media (max-width: 480px) {
+            .reason-options {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                padding: 24px 20px;
+            }
+            .body {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="icon">😊</div>
-        <h1>感谢您使用 ERP订单自动比对</h1>
-        <p>很抱歉看到您离开。如果您愿意，可以告诉我们卸载的原因，帮助我们做得更好。</p>
+    <div class="container">
+        <!-- 表单状态 -->
+        <div id="formView">
+            <div class="header">
+                <span class="emoji">😢</span>
+                <h1>很遗憾你要离开</h1>
+                <p>感谢你使用 ERP订单自动比对插件<br>能否花1分钟告诉我们原因？帮助我们改进</p>
+            </div>
+            <div class="body">
+                <!-- 常见问题快速解决 -->
+                <div class="faq-section">
+                    <div class="faq-title">常见问题快速解决</div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            <span>插件报错 / 无法检测页面</span>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="faq-a">
+                            1. 刷新 ERP 页面（Ctrl+F5 强制刷新）<br>
+                            2. 在插件图标上右键 → 重新加载插件<br>
+                            3. 确认已登录 ERP 系统且处于商品列表页<br>
+                            4. 如仍无法解决，请 <a href="mailto:bailongma-ai@coze.email">联系我们</a>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            <span>图片下载失败</span>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="faq-a">
+                            请确认：<br>
+                            1. ERP 中的商品确实有图片（非占位图）<br>
+                            2. 网络连接正常（图片从阿里云 OSS 下载）<br>
+                            3. Chrome 下载权限已开启
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            <span>设置不生效 / 数据导出格式不对</span>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="faq-a">
+                            1. 进入插件「设置」面板，修改后点击保存<br>
+                            2. 关闭再重新打开插件弹窗<br>
+                            3. 如问题持续，可尝试清除缓存：设置 → 清除缓存
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q" onclick="toggleFaq(this)">
+                            <span>授权 / 许可证问题</span>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="faq-a">
+                            个人版插件无需许可证，安装即可使用。如显示「未授权」，请刷新页面或重新加载插件。<br>
+                            如需帮助：<a href="mailto:bailongma-ai@coze.email">bailongma-ai@coze.email</a>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="feedback">
-            <textarea id="feedback-text" placeholder="请输入您的建议或遇到的问题..."></textarea>
+                <div class="divider"></div>
+
+                <!-- 反馈表单 -->
+                <div class="form-section">
+                    <div class="form-title">告诉我们离开的原因</div>
+                    <form id="feedbackForm" onsubmit="return submitFeedback(event)">
+                        <div class="reason-group">
+                            <label>主要原因 <span style="color:#dc2626">*</span></label>
+                            <div class="reason-options">
+                                <div class="reason-opt">
+                                    <input type="radio" name="reason" id="r1" value="bug" required>
+                                    <label for="r1"><span class="icon">🐛</span>遇到 Bug / 报错</label>
+                                </div>
+                                <div class="reason-opt">
+                                    <input type="radio" name="reason" id="r2" value="slow">
+                                    <label for="r2"><span class="icon">🐌</span>运行太慢</label>
+                                </div>
+                                <div class="reason-opt">
+                                    <input type="radio" name="reason" id="r3" value="missing">
+                                    <label for="r3"><span class="icon">🤔</span>缺少需要的功能</label>
+                                </div>
+                                <div class="reason-opt">
+                                    <input type="radio" name="reason" id="r4" value="complex">
+                                    <label for="r4"><span class="icon">😵</span>操作太复杂</label>
+                                </div>
+                                <div class="reason-opt">
+                                    <input type="radio" name="reason" id="r5" value="nouse">
+                                    <label for="r5"><span class="icon">✅</span>不再需要了</label>
+                                </div>
+                                <div class="reason-opt">
+                                    <input type="radio" name="reason" id="r6" value="other">
+                                    <label for="r6"><span class="icon">💬</span>其他原因</label>
+                                </div>
+                            </div>
+                            <div class="error-msg" id="reasonError">请选择一个原因</div>
+                        </div>
+                        <div class="comment-group">
+                            <label>补充说明（选填）</label>
+                            <textarea name="comment" placeholder="具体遇到了什么问题？或者希望有哪些改进？&#10;你的反馈对我们非常重要！"></textarea>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary" onclick="window.close()">直接离开</button>
+                            <button type="submit" class="btn btn-primary">提交反馈</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <button class="btn" onclick="submitFeedback()">提交反馈</button>
-
-        <div class="footer">
-            <p>如需重新使用，可在 Chrome 应用商店重新安装。</p>
-            <p>技术支持：liuhong1688@vip.qq.com</p>
+        <!-- 成功状态 -->
+        <div class="success-state" id="successView">
+            <div class="check-icon">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h2>感谢你的反馈！</h2>
+            <p>你的意见对我们非常重要<br>我们会认真对待每一条反馈并持续改进</p>
+            <button class="btn btn-secondary" onclick="window.close()" style="width:auto;padding:10px 32px;">关闭窗口</button>
         </div>
     </div>
 
     <script>
-        function submitFeedback() {
-            const text = document.getElementById('feedback-text').value.trim();
-            if (!text) {
-                alert('请输入反馈内容');
-                return;
+        function toggleFaq(el) {
+            const item = el.parentElement;
+            const wasOpen = item.classList.contains('open');
+            // 关闭所有
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            // 切换当前
+            if (!wasOpen) item.classList.add('open');
+        }
+
+        function submitFeedback(e) {
+            e.preventDefault();
+            const form = e.target;
+            const reason = form.querySelector('input[name="reason"]:checked');
+            const errorEl = document.getElementById('reasonError');
+
+            if (!reason) {
+                errorEl.style.display = 'block';
+                return false;
             }
-            // In real product, send to your feedback endpoint
-            // fetch('https://your-feedback-api.com/uninstall', { method: 'POST', body: JSON.stringify({ feedback: text }) });
-            alert('感谢您的反馈！');
-            document.getElementById('feedback-text').value = '';
+            errorEl.style.display = 'none';
+
+            const data = {
+                reason: reason.value,
+                reasonText: reason.parentElement.querySelector('label').textContent.trim(),
+                comment: form.querySelector('textarea[name="comment"]').value.trim(),
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            };
+
+            // 发送到 GitHub Issues（通过 webhook 或 email）
+            sendFeedback(data);
+
+            // 切换到成功状态
+            document.getElementById('formView').style.display = 'none';
+            document.getElementById('successView').style.display = 'block';
+            return false;
+        }
+
+        function sendFeedback(data) {
+            // FormSubmit.co 提交（异步，不阻塞页面）
+            const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/liuhong1688@vip.qq.com';
+
+            fetch(FORMSUBMIT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    _subject: '[ERP插件卸载反馈] ' + data.reasonText,
+                    卸载原因: data.reasonText,
+                    补充说明: data.comment || '（无）',
+                    提交时间: new Date().toLocaleString('zh-CN'),
+                    浏览器: data.userAgent
+                })
+            }).then(r => {
+                if (r.ok) console.log('[ERP] 反馈已提交');
+                else console.warn('[ERP] 提交失败:', r.status);
+            }).catch(err => console.warn('[ERP] 提交异常:', err));
+
+            // localStorage 备份
+            try {
+                const logs = JSON.parse(localStorage.getItem('erp_uninstall_feedback') || '[]');
+                logs.push(data);
+                localStorage.setItem('erp_uninstall_feedback', JSON.stringify(logs));
+            } catch(e) {}
+        }
+
+        // 如果 URL 带了 version 参数，显示对应版本信息
+        const params = new URLSearchParams(window.location.search);
+        const version = params.get('v');
+        if (version) {
+            const header = document.querySelector('.header p');
+            header.innerHTML += '<br><small style="opacity:0.7">当前版本：v' + version + '</small>';
         }
     </script>
 </body>
